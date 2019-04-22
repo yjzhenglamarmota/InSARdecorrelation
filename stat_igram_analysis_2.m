@@ -4,11 +4,11 @@ addpath /Users/yjzheng/Documents/MATLAB/mytools/
 addpath realdata_stat
 set(0,'defaultAxesFontSize', 25);
 set(groot, 'defaultFigureUnits','normalized')
-set(groot, 'defaultFigurePosition',[0 0 0.6 0.5])
+set(groot, 'defaultFigurePosition',[0 0 0.5 0.5])
 
 % read igram lists
-igramnames=importdata('ulist');
-file1= 'redstack';file2= 'indstack';
+igramnames=importdata('Cascadia_ulist');
+file1= 'redallstack2';file2= 'indallstack2';
 % read stacks file of Cascadia
 fid=fopen(file1);nr=1104;dat=fread(fid,[nr*2,inf],'float','ieee-le');
 amp=dat(1:nr,:)';phaseed=dat(nr+1:end,:)';naz=size(amp,1);fclose(fid);
@@ -58,29 +58,31 @@ fields=fieldnames(stat_igramlist);
 %%%% Yey plots and analysis
 %% First, var(\phi) and coherence
 numlook=150;
-cohtheo=linspace(0.01,max(cohall)+0.1,1000);
-prevarigram=(1-cohtheo.^2)./2./cohtheo.^2/numlook; % theory
-vphallhi=prctile(vphall,95);vphall(vphall>vphallhi)=nan; % trim down the real data a bit
-figure(2);hold on;scatter(cohall,vphall,'filled');
-% scatter(cohtheo,prevarigram);
-% legend('Real data','theory')
-xlabel('Coherence');ylabel('var(\phi_{decor})');grid on;
-xlim([0.02,1])
+% cohtheo=linspace(0.01,max(cohall)+0.1,1000);
+% prevarigram=(1-cohtheo.^2)./2./cohtheo.^2/numlook; % theory
+% vphallhi=prctile(vphall,95);vphall(vphall>vphallhi)=nan; % trim down the real data a bit
+% figure(2);hold on;scatter(cohall,vphall,'filled');
+% % scatter(cohtheo,prevarigram);
+% % legend('Real data','theory')
+% xlabel('Coherence');ylabel('var(\phi_{decor})');grid on;
+% xlim([0.02,1])
 
 %% Next coherence in different igrams
-for i=1:1:length(fieldnames(stat_igramlist))
-    gama=stat_igramlist.(fields{i}).coh;
-    if mean(gama)>0.1
-    T=stat_igramlist.(fields{i}).timespan;
-    [Tsort,index]=sort(T);gama=gama(index);
-    figure(3);subplot(1,2,1);scatter(Tsort,gama,'filled');
-    ylim([0.05,0.6]);xlabel('Time span, days'); ylabel('coherence');grid on;
-    legend(['nr=' num2str(posindex(i,2)) ' naz=' num2str(posindex(i,3))]);
-    subplot(1,2,2);
-    imagesc(pic);axis image;axis off;hold on;scatter(posindex(i,2),posindex(i,3),100,'r','filled')
-    saveas(gcf,['nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'png')
-    end
-end
+% for i=1:1:length(fieldnames(stat_igramlist))
+%     gama=stat_igramlist.(fields{i}).coh;
+%     if mean(gama)>0.1
+%     T=stat_igramlist.(fields{i}).timespan;
+%     [Tsort,index]=sort(T);gama=gama(index);
+%     figure(3);subplot(1,2,1);scatter(Tsort,gama,'filled');
+%     ylim([0.05,0.6]);xlabel('Time span, days'); ylabel('coherence');grid on;
+%     legend(['nr=' num2str(posindex(i,2)) ' naz=' num2str(posindex(i,3))]);
+%     subplot(1,2,2);
+%     imagesc(pic);axis image;axis off;hold on;scatter(posindex(i,2),posindex(i,3),100,'r','filled')
+%     fig=gcf;
+%     fig.InvertHardcopy = 'off';
+%     saveas(gcf,['nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'epsc')
+%     end
+% end
 
 % for i=1:5:length(fieldnames(stat_igramlist))
 %     gama=stat_igramlist.(fields{i}).coh;
@@ -95,6 +97,29 @@ end
 %     end
 % end
 
+% plot a few slected points for the paper
+for i=1:1:length(fieldnames(stat_igramlist))
+    gama=stat_igramlist.(fields{i}).coh;
+    if posindex(i,2)==506 && posindex(i,3)==1526
+        T=stat_igramlist.(fields{i}).timespan;
+        [Tsort,index]=sort(T);gama=gama(index);
+        figure(22);scatter(Tsort,gama,'filled');
+        ylim([0.05,0.6]);xlabel('Time span, days'); ylabel('coherence');grid on;
+        fig=gcf;
+        fig.InvertHardcopy = 'off';
+        saveas(gcf,['CAS_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'epsc')
+    end
+    if posindex(i,2)==146 && posindex(i,3)==2126
+        T=stat_igramlist.(fields{i}).timespan;
+        [Tsort,index]=sort(T);gama=gama(index);
+        figure(23);scatter(Tsort,gama,'filled');
+        ylim([0.05,0.6]);xlabel('Time span, days'); ylabel('coherence');grid on;
+        fig=gcf;
+        fig.InvertHardcopy = 'off';
+        saveas(gcf,['CAS_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'epsc')
+    end
+end
+
 %% brief investigation into periodic coherence
 % testloc=stat_igramlist.loc6262306;
 % goodcohigramlist=testloc.igramname(testloc.coh>0.22 & testloc.timespan>200,:);
@@ -103,6 +128,11 @@ lon0=-124.55555725;lat0=48.98333359;
 dlon=0.34722223e-4*80; % take looks into account
 dlat=-0.13888889e-03*20;
 
-rloc=806;azloc=446;
+rloc=506;azloc=1526;
 lon=lon0+dlon*(rloc-1)
 lat=lat0+dlat*(azloc-1)
+
+rloc=146;azloc=2126;
+lon=lon0+dlon*(rloc-1)
+lat=lat0+dlat*(azloc-1)
+

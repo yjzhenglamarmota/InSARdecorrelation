@@ -4,10 +4,10 @@ addpath /Users/yjzheng/Documents/MATLAB/mytools/
 addpath realdata_stat2
 set(0,'defaultAxesFontSize', 25);
 set(groot, 'defaultFigureUnits','normalized')
-set(groot, 'defaultFigurePosition',[0 0 0.8 0.5])
+set(groot, 'defaultFigurePosition',[0 0 0.5 0.5])
 
 % read igram lists
-igramnames=importdata('realdata_stat2/ulist');
+igramnames=importdata('DV_ulist');
 file1= 'stackred_20170330';file2= 'stackind_20170330';
 % read stacks file of Cascadia
 fid=fopen(file1);nr=720;dat=fread(fid,[nr*2,inf],'float','ieee-le');
@@ -57,41 +57,64 @@ end
 fields=fieldnames(stat_igramlist);
 %%%% Yey plots and analysis
 %% First, var(\phi) and coherence
-numlook=1500;
-cohtheo=linspace(0.01,max(cohall)+0.1,1000);
-prevarigram=(1-cohtheo.^2)./2./cohtheo.^2/numlook; % theory
-vphallhi=prctile(vphall,95);vphall(vphall>vphallhi)=nan; % trim down the real data a bit
-figure(2);hold on;scatter(cohall,vphall,'filled');
-% scatter(cohtheo,prevarigram);
-% legend('Real data','theory')
-xlabel('Coherence');ylabel('var(\phi_{decor})');grid on;
-xlim([0.02,1])
+% numlook=1500;
+% cohtheo=linspace(0.01,max(cohall)+0.1,1000);
+% prevarigram=(1-cohtheo.^2)./2./cohtheo.^2/numlook; % theory
+% vphallhi=prctile(vphall,95);vphall(vphall>vphallhi)=nan; % trim down the real data a bit
+% figure(2);hold on;scatter(cohall,vphall,'filled');
+% % scatter(cohtheo,prevarigram);
+% % legend('Real data','theory')
+% xlabel('Coherence');ylabel('var(\phi_{decor})');grid on;
+% xlim([0.02,1])
 
 %% Next coherence in different igrams
+% for i=1:1:length(fieldnames(stat_igramlist))
+%     gama=stat_igramlist.(fields{i}).coh;
+%     if mean(gama)>0.1
+%     T=stat_igramlist.(fields{i}).timespan;
+%     [Tsort,index]=sort(T);gama=gama(index);
+%     figure(3);subplot(1,2,1);scatter(Tsort,gama,'filled');
+%     ylim([0.05,1]);xlabel('Time span, days'); ylabel('coherence');grid on;
+%     legend(['nr=' num2str(posindex(i,2)) ' naz=' num2str(posindex(i,3))]);
+%     subplot(1,2,2);
+%     imagesc(pic);axis image;axis off;hold on;scatter(posindex(i,2),posindex(i,3),100,'r','filled')
+%     saveas(gcf,['DVgd_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'png')
+%     end
+% end
+% 
+% for i=1:1:length(fieldnames(stat_igramlist))
+%     gama=stat_igramlist.(fields{i}).coh;
+%     if mean(gama)<0.1
+%     T=stat_igramlist.(fields{i}).timespan;
+%     figure(4);subplot(1,2,1);scatter(T,gama,'filled');
+%     ylim([0,0.2]);xlabel('Time span, days'); ylabel('coherence');grid on;
+%     legend(['nr=' num2str(posindex(i,2)) ' naz=' num2str(posindex(i,3))]);
+%     subplot(1,2,2);
+%     imagesc(pic);axis image;hold on;axis off;scatter(posindex(i,2),posindex(i,3),100,'r','filled')
+%     saveas(gcf,['DVbd_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'png')
+%     end
+% end
+
+% A few specific points
 for i=1:1:length(fieldnames(stat_igramlist))
     gama=stat_igramlist.(fields{i}).coh;
-    if mean(gama)>0.1
+    if posindex(i,2)==506 && posindex(i,3)==506
     T=stat_igramlist.(fields{i}).timespan;
     [Tsort,index]=sort(T);gama=gama(index);
-    figure(3);subplot(1,2,1);scatter(Tsort,gama,'filled');
+    figure(23);scatter(Tsort,gama,'filled');
     ylim([0.05,1]);xlabel('Time span, days'); ylabel('coherence');grid on;
-    legend(['nr=' num2str(posindex(i,2)) ' naz=' num2str(posindex(i,3))]);
-    subplot(1,2,2);
-    imagesc(pic);axis image;axis off;hold on;scatter(posindex(i,2),posindex(i,3),100,'r','filled')
-    saveas(gcf,['DVgd_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'png')
+    fig=gcf;
+    fig.InvertHardcopy = 'off';
+    saveas(gcf,['DVgd_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'epsc')
     end
-end
-
-for i=1:1:length(fieldnames(stat_igramlist))
-    gama=stat_igramlist.(fields{i}).coh;
-    if mean(gama)<0.1
+    if posindex(i,2)==326 && posindex(i,3)==566
     T=stat_igramlist.(fields{i}).timespan;
-    figure(4);subplot(1,2,1);scatter(T,gama,'filled');
-    ylim([0,0.2]);xlabel('Time span, days'); ylabel('coherence');grid on;
-    legend(['nr=' num2str(posindex(i,2)) ' naz=' num2str(posindex(i,3))]);
-    subplot(1,2,2);
-    imagesc(pic);axis image;hold on;axis off;scatter(posindex(i,2),posindex(i,3),100,'r','filled')
-    saveas(gcf,['DVbd_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'png')
+    [Tsort,index]=sort(T);gama=gama(index);
+    figure(24);scatter(Tsort,gama,'filled');
+    ylim([0.05,1]);xlabel('Time span, days'); ylabel('coherence');grid on;
+    fig=gcf;
+    fig.InvertHardcopy = 'off';
+    saveas(gcf,['DVgd_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'epsc')
     end
 end
 
@@ -99,10 +122,15 @@ end
 % testloc=stat_igramlist.loc6262306;
 % goodcohigramlist=testloc.igramname(testloc.coh>0.22 & testloc.timespan>200,:);
 % 
-lon0=-124.55555725;lat0=48.98333359;
+lon0=-117;lat0=37;
 dlon=0.34722223e-4*80; % take looks into account
 dlat=-0.13888889e-03*20;
 
-rloc=806;azloc=446;
+rloc=506;azloc=506;
+lon=lon0+dlon*(rloc-1)
+lat=lat0+dlat*(azloc-1)
+
+
+rloc=326;azloc=566;
 lon=lon0+dlon*(rloc-1)
 lat=lat0+dlat*(azloc-1)
