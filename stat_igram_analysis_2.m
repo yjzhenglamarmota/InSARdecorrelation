@@ -3,8 +3,8 @@ clear;clc;close all;
 addpath /Users/yjzheng/Documents/MATLAB/mytools/
 addpath realdata_stat
 set(0,'defaultAxesFontSize', 25);
-set(groot, 'defaultFigureUnits','normalized')
-set(groot, 'defaultFigurePosition',[0 0 0.5 0.5])
+set(groot, 'defaultFigureUnits','inches')
+set(groot, 'defaultFigurePosition',[0 0 10 5.45])
 
 % read igram lists
 igramnames=importdata('Cascadia_ulist');
@@ -103,19 +103,21 @@ for i=1:1:length(fieldnames(stat_igramlist))
     if posindex(i,2)==506 && posindex(i,3)==1526
         T=stat_igramlist.(fields{i}).timespan;
         [Tsort,index]=sort(T);gama=gama(index);
-        figure(22);scatter(Tsort,gama,'filled');
-        ylim([0.05,0.6]);xlabel('Time span, days'); ylabel('coherence');grid on;
+        figure;scatter(Tsort,gama,'filled');
+        ylim([0.05,1]);grid on;
         fig=gcf;
         fig.InvertHardcopy = 'off';
+        set(gcf,'color','white')
         saveas(gcf,['CAS_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'epsc')
     end
     if posindex(i,2)==146 && posindex(i,3)==2126
         T=stat_igramlist.(fields{i}).timespan;
         [Tsort,index]=sort(T);gama=gama(index);
-        figure(23);scatter(Tsort,gama,'filled');
-        ylim([0.05,0.6]);xlabel('Time span, days'); ylabel('coherence');grid on;
+        figure;scatter(Tsort,gama,'filled');
+        ylim([0.05,1]);grid on;
         fig=gcf;
         fig.InvertHardcopy = 'off';
+        set(gcf,'color','white')
         saveas(gcf,['CAS_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'epsc')
     end
 end

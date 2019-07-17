@@ -3,8 +3,8 @@ clear;clc;close all;
 addpath /Users/yjzheng/Documents/MATLAB/mytools/
 addpath realdata_stat2
 set(0,'defaultAxesFontSize', 25);
-set(groot, 'defaultFigureUnits','normalized')
-set(groot, 'defaultFigurePosition',[0 0 0.5 0.5])
+set(groot, 'defaultFigureUnits','inches')
+set(groot, 'defaultFigurePosition',[0 0 10 5.45])
 
 % read igram lists
 igramnames=importdata('DV_ulist');
@@ -102,18 +102,20 @@ for i=1:1:length(fieldnames(stat_igramlist))
     T=stat_igramlist.(fields{i}).timespan;
     [Tsort,index]=sort(T);gama=gama(index);
     figure(23);scatter(Tsort,gama,'filled');
-    ylim([0.05,1]);xlabel('Time span, days'); ylabel('coherence');grid on;
+    ylim([0.05,1]);grid on;
     fig=gcf;
     fig.InvertHardcopy = 'off';
+    set(gcf,'color','white')
     saveas(gcf,['DVgd_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'epsc')
     end
     if posindex(i,2)==326 && posindex(i,3)==566
     T=stat_igramlist.(fields{i}).timespan;
     [Tsort,index]=sort(T);gama=gama(index);
     figure(24);scatter(Tsort,gama,'filled');
-    ylim([0.05,1]);xlabel('Time span, days'); ylabel('coherence');grid on;
+    ylim([0.05,1]);grid on;
     fig=gcf;
     fig.InvertHardcopy = 'off';
+    set(gcf,'color','white')
     saveas(gcf,['DVgd_nr=' num2str(posindex(i,2)) '_naz=' num2str(posindex(i,3)) '_coh'],'epsc')
     end
 end

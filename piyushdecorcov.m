@@ -18,6 +18,7 @@ if numigram~=numrealigram
     return
 end
 %% Now we can compute
+coh_sar(isnan(coh_sar))=0;
 coh_ifg=0.5*A*coh_sar*A';
 diagcohifg=diag(coh_ifg);
 D_diag=sqrt(varphase)./sqrt(diagcohifg);
