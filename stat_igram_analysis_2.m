@@ -1,6 +1,6 @@
 % This program plots coh-T
 clear;clc;close all;
-addpath /Users/yjzheng/Documents/MATLAB/mytools/
+addpath /Users/yjzheng/iCloud/Documents/MATLAB/mytools/
 addpath realdata_stat
 set(0,'defaultAxesFontSize', 25);
 set(groot, 'defaultFigureUnits','inches')

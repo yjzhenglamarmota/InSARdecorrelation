@@ -1,7 +1,7 @@
 % Derived from stat_igram_analysis_1.m
 % For death valley region
 clear;clc;close all;
-addpath /Users/yjzheng/Documents/MATLAB/mytools/
+addpath /Users/yjzheng/iCloud/Documents/MATLAB/mytools/
 addpath realdata_stat2
 set(0,'defaultAxesFontSize', 25);
 set(groot, 'defaultFigureUnits','inches')
@@ -195,13 +195,3 @@ objhl= findobj(objh, 'type', 'patch'); %// children of legend of type line
 set(objhl, 'Markersize', 25); %// set value as desired
 fig=gcf;fig.InvertHardcopy = 'off';set(gcf,'color','white')
 saveas(gcf,'DV_validate','epsc')
-
-%% compute table of merits
-numpt=length(preind);
-erryujie=[preind-varphaseind prered-varphasered];
-errpiyush=[preind_piyush-varphaseind  prered_piyush-varphasered];
-errhanssen=[preind_hanssen-varphaseind  prered_hanssen-varphasered];
-
-errnormyujie=sqrt(erryujie(:,1).^2+erryujie(:,2).^2);
-errnormpiyush=sqrt(errpiyush(:,1).^2+errpiyush(:,2).^2);
-errnormhanssen=sqrt(errhanssen(:,1).^2+errhanssen(:,2).^2);

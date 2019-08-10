@@ -1,4 +1,6 @@
 % test the correlation between complex numbers and the correlation between their corresponding phases.
+% complex numbers are generated as random gaussian variables, 
+% phase ~ uniform distribution.
 clear; close all; clc;
 
 numpixel=40000;

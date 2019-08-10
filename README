@@ -1,1 +1,29 @@
-This folder contains programs developed for the InSAR decorrelation covariance model.
+This folder contains MATLAB programs developed for the InSAR decorrelation noise covariance model.
+
+aux_locwithampbackground.m: Mark selected locations in a SAR amplitude map. This program was used to generate Fig2.(2) and (3).
+
+aux_tableofmerits.m: This program was used to generate table 2.
+
+compare_realdata.m: This program was used to generate Fig.5 and Fig. 6.
+
+comparemodels_simulation.m: This program was used to generate Fig.3.
+
+cpx_phase_correlation.m: This program was used to compute Eq. 34
+
+DVstat_igram_analysis_1.m: This program was used to generate Fig. 4 Death Valleycase: data and model predictions of decorrelation phase noise variance after stacking
+
+DVstat_igram_analysis_2.m: This program was used to generate Fig. 2 Death Valley coherence-time plot
+
+mydecorcov.m: This program generates decorrelation covariance matrix using the proposed model
+
+piyushdecorcov.m: This program generates decorrelation covariance matrix using Piyush's model from his paper
+
+simulateSLC.m: This program generates a series of SLCs with given scattering model. Used in cpx_phase_correlation.m.
+
+stat_igram_analysis_1.m: This program was used to generate Fig.4 Cascadia case: data and model predictinos of decorrelation phase noise variance after stacking
+
+stat_igram_analysis_2.m: This program was used to generate Fig.2 Cascadia coherence-time plot.
+
+
+
+
